@@ -146,6 +146,16 @@ vars:
   max_batch_size: 200 # Any integer less than  or equal to 2100 will do.
 ```
 
+### Type hints
+
+With the release v0.20.2 you are able to provide [Query Hints](https://docs.microsoft.com/en-us/sql/t-sql/queries/hints-transact-sql-query?view=sql-server-ver15) for model materializations using a new config parameter `query_hints`.
+
+With it, you can for instance overwrite the max degree of parallelism for a particular model:
+
+```
+{{ config(query_hints='MAXDOP 1') }}
+```
+
 ### Hooks
 
 ### Custom schemas
