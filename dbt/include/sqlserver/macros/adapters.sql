@@ -143,6 +143,7 @@
 
 {% macro sqlserver__create_table_as(temporary, relation, sql) -%}
    {%- set as_columnstore = config.get('as_columnstore', default=true) -%}
+   {%- set query_hints = config.get('query_hints', default=None) -%}
    {% set tmp_relation = relation.incorporate(
    path={"identifier": relation.identifier.replace("#", "") ~ '_temp_view'},
    type='view')-%}
@@ -159,6 +160,7 @@
 
    SELECT * INTO {{ relation }} FROM
     {{ tmp_relation }}
+    {% if query_hints %}OPTION ({{ query_hints }}){% endif -%}
 
    {{ sqlserver__drop_relation_script(tmp_relation) }}
     
